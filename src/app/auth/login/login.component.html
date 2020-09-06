@@ -1,0 +1,21 @@
+<div class="login-box">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm">
+    <div class="user-box">
+      <input type="text" name="" required="" formControlName="userName">
+      <label>Email</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="" required="" formControlName="password">
+      <label>Password</label>
+    </div>
+    <div class="form-group alert alert-danger col-sm-12" role="alert" *ngIf="isLoginError">
+      userName / Password are Wrong
+  </div>
+    <p style="color:#ffff"><input type="checkbox"> Remember me
+    <a [routerLink]="'/forgetPassword'" style="color:#ffff;float:right;">Forgot password</a></p>
+    <button type="submit"class="button button2"[disabled]="!loginForm.valid" (click)="login()">Login</button>
+    <p style="color: #ffff;text-align:center">Are you new user?</p>
+    <button type="submit" class="buttons button2"  [routerLink]="'/register'">Register</button>
+  </form>
+</div>

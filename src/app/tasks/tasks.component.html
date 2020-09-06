@@ -1,0 +1,116 @@
+<!-- <div class="lds-roller">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div> -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">To Do</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" title="Settings"><i class="fa fa-cog"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" title="Help & Feedback"><i class="fa fa-question-circle"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" title="Notification"><i class="fa fa-bell"></i></a>
+        </li>
+        <li class="nav-item">
+          <div class="btn-group dropleft" id="navmenu">
+            <a class="nav-link " title="Notification" data-toggle="dropdown" data-display="static"><i
+                class="fa fa-user"></i></a>
+            <div class="dropdown-menu ">
+              <a class="dropdown-item" href="#">User Info</a>
+              <a class="dropdown-item" href="#">Change Password</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" [routerLink]="'/login'">Sign Out</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div style="padding: 10px;">
+      <form [formGroup]="taskform">
+        <div class="input-group input-group-lg" style="margin-bottom: 10px;outline: none;">
+          <input type="text" class="form-control" placeholder="Add ToDo.." formControlName="content">
+        </div>
+        <button type="submit" class="button button2" (click)="clickBtn()" [disabled]="!taskform.valid">+ Add</button>
+      </form>
+    </div>
+    <div style="padding: 10px;">
+      <table class="table">
+        <thead>
+          <tr class="bg-dark">
+            <th scope="col" class="text-white">#</th>
+            <th scope="col" class="text-white">Active</th>
+            <th scope="col" class="text-white">Task</th>
+            <th scope="col" class="text-white"></th>
+            <th scope="col" class="text-white"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of listOfTasks; index as i;">
+            <th scope="row">{{i + 1}}</th>
+            <td>
+              <input type="checkbox" name="Active" [checked]="row.active" [(ngModel)]="row.active"
+                (change)="actiavteAndDeactivate(row)">
+            </td>
+            <td [ngStyle]="{'text-decoration': row.active ? 'line-through' : 'none' }"
+              style="text-decoration: line-through">{{row.content}}</td>
+            <td>
+              <button type="button" class="btn btn-outline-info" [disabled]="row.active" (click)="editTask(row)"><i
+                  class="fa fa-edit"></i></button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-danger" [disabled]="row.active"
+                (click)="deleteTask(row.id)"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="editTask" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="taskform">
+            <textarea class="input-group input-group-lg" name="taskUpdateForm" id="taskUpdateForm" cols="30" rows="8"
+              placeholder="Add ToDo.." formControlName="content"></textarea>
+            <p class="card-text"><small class="text-muted">Last Updated on {{updateArray | date}}</small></p>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary"
+            (click)="updateTaskForm()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
